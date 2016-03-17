@@ -93,6 +93,7 @@ mkdir ${SOURCEDIR}/atkmm-1.6
 mkdir ${SOURCEDIR}/gdkmm-2.4
 mkdir ${SOURCEDIR}/libxslt
 mkdir ${SOURCEDIR}/gsl
+mkdir ${SOURCEDIR}/librsvg
 mkdir ${SOURCEDIR}/boost
 mkdir ${SOURCEDIR}/libpopt
 mkdir ${SOURCEDIR}/inkscape
@@ -161,6 +162,7 @@ wget  -nc  -P ${ARCHIVEDIR}  https://launchpad.net/ubuntu/+archive/primary/+file
 wget  -nc  -P ${ARCHIVEDIR}  https://launchpad.net/ubuntu/+archive/primary/+files/gtkmm2.4_2.24.4.orig.tar.xz
 wget  -nc  -P ${ARCHIVEDIR}  https://launchpad.net/ubuntu/+archive/primary/+files/libxslt_1.1.28.orig.tar.gz
 wget  -nc  -P ${ARCHIVEDIR}  https://launchpad.net/ubuntu/+archive/primary/+files/gsl_1.16+dfsg.orig.tar.gz
+wget  -nc  -P ${ARCHIVEDIR}  https://download.gnome.org/sources/librsvg/2.37/librsvg-2.37.0.tar.xz
 wget  -nc  -P ${ARCHIVEDIR}  http://sourceforge.net/projects/boost/files/boost/1.60.0/boost_1_60_0.tar.gz
 wget  -nc  -P ${ARCHIVEDIR}  https://launchpad.net/ubuntu/+archive/primary/+files/popt_1.16.orig.tar.gz
 wget  -nc  -P ${ARCHIVEDIR}  https://inkscape.org/en/gallery/item/3860/inkscape-0.91.tar.bz2
@@ -235,6 +237,7 @@ mkdir ${SOURCEDIR}/gsl/gsl-1.16+dfsg/doc/
 echo "target: ;"   > ${SOURCEDIR}/gsl/gsl-1.16+dfsg/doc/Makefile.in
 echo  "install: ;" >> ${SOURCEDIR}/gsl/gsl-1.16+dfsg/doc/Makefile.in
 
+tar -xf  ${ARCHIVEDIR}/librsvg-2.37.0.tar.xz -C ${SOURCEDIR}/librsvg
 tar -xf  ${ARCHIVEDIR}/boost_1_60_0.tar.gz -C ${SOURCEDIR}/boost
 tar -xf  ${ARCHIVEDIR}/popt_1.16.orig.tar.gz -C ${SOURCEDIR}/libpopt
 tar -xf  ${ARCHIVEDIR}/inkscape-0.91.tar.bz2 -C ${SOURCEDIR}/inkscape
@@ -318,7 +321,8 @@ foreach n ( 1 2 3 4 5 )
 	 echo Building 'atkmm-1.6' ; cd ${SOURCEDIR}/atkmm-1.6/atkmm-2.22.7 ; `./configure -prefix ${INSTDIR}  >> ${CONFIGLOG}  ; make  >> ${MAKELOG}; make install  >> ${MAKEINSTALLLOG} ;`
 	 echo Building 'gdkmm-2.4' ; cd ${SOURCEDIR}/gdkmm-2.4/gtkmm-2.24.4 ; `./configure -prefix ${INSTDIR}  >> ${CONFIGLOG}  ; make  >> ${MAKELOG}; make install  >> ${MAKEINSTALLLOG} ;`
 	 echo Building 'libxslt' ; cd ${SOURCEDIR}/libxslt/libxslt-1.1.28 ; `./configure -prefix ${INSTDIR}  >> ${CONFIGLOG}  ; make  >> ${MAKELOG}; make install  >> ${MAKEINSTALLLOG} ;`
-	 echo Building 'gsl' ; cd ${SOURCEDIR}/gsl/gsl-1.16+dfsg ; `./configure -prefix ${INSTDIR}  >> ${CONFIGLOG}  ; make  >> ${MAKELOG}; make install  >> ${MAKEINSTALLLOG} ;`
+	 echo Building 'gsl' ; cd ${SOURCEDIR}/gsl/gsl-1.16+dfsg ; `./configure -prefix ${INSTDIR}  >> ${CONFIGLOG}  ; ./b2 install  >> ${MAKELOG};`
+	 echo Building 'librsvg' ; cd ${SOURCEDIR}/librsvg/librsvg-2.37.0 ; `./configure -prefix ${INSTDIR}  >> ${CONFIGLOG}  ; make  >> ${MAKELOG}; make install  >> ${MAKEINSTALLLOG} ;`
 	 echo Building 'boost' ; cd ${SOURCEDIR}/boost/boost_1_60_0 ; `./bootstrap.sh --prefix=${INSTDIR}  >> ${CONFIGLOG}  ; make  >> ${MAKELOG}; make install  >> ${MAKEINSTALLLOG} ;`
 	 echo Building 'libpopt' ; cd ${SOURCEDIR}/libpopt/popt-1.16 ; `./configure -prefix ${INSTDIR}  >> ${CONFIGLOG}  ; make  >> ${MAKELOG}; make install  >> ${MAKEINSTALLLOG} ;`
 	 echo Building 'inkscape' ; cd ${SOURCEDIR}/inkscape/inkscape-0.91 ; `./configure -prefix ${INSTDIR}  >> ${CONFIGLOG}  ; make  >> ${MAKELOG}; make install  >> ${MAKEINSTALLLOG} ;`
